@@ -1,16 +1,23 @@
 import python.c;
 
-import scalars: the_answer;
+import scalars: theAnswer;
 
-extern(C) nothrow:
+extern(C):
 
-PyObject* PyInit_raw() {
+export PyObject* PyInit_raw() {
 
-    auto methods = [
-        PyMethodDef(null, null, 0, null),
+    import core.runtime: rt_init;
+
+    rt_init;
+
+    static PyMethodDef[] methods;
+    methods = [
+        PyMethodDef("the_answer", &theAnswer, METH_VARARGS, "The answer to the ultimate question"),
+        PyMethodDef(null, null, 0, null), // sentinel
     ];
 
-    auto module_ = PyModuleDef(
+    static PyModuleDef moduleDef;
+    moduleDef = PyModuleDef(
         PyModuleDef_Base(),
         "raw",
         null, // doc
@@ -19,5 +26,5 @@ PyObject* PyInit_raw() {
     );
 
 
-    return pyModuleCreate(&module_);
+    return PyModule_Create(&moduleDef);
 }
