@@ -2,13 +2,16 @@ import python.c;
 
 import scalars: theAnswer;
 
-extern(C):
+extern(C) nothrow:
 
 export PyObject* PyInit_raw() {
 
     import core.runtime: rt_init;
 
-    rt_init;
+    try
+        rt_init;
+    catch(Exception _)
+        return null;
 
     static PyMethodDef[] methods;
     methods = [
