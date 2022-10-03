@@ -5,7 +5,10 @@ license "boost"
 targetType "library"
 targetPath "bin"
 
-#preGenerateCommands "make -C $PACKAGE_DIR source/python/raw.d"
+preGenerateCommands "make -C $PACKAGE_DIR source/python/c.d"
+#preGenerateCommands "dub run dpp@0.4.10 --build=release --compiler=ldc2 -- --function-macros --preprocess-only --include-path $$(python $PACKAGE_DIR/version.py) $PACKAGE_DIR/source/python/c.dpp"
+
+libs "python3.9"
 
 configuration "library" {
 
