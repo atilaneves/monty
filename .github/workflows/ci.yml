@@ -37,29 +37,30 @@ jobs:
           ls ${{ env.LLVM_PATH }}/lib
           echo "Done wondering"
 
-      # - name: Install D compiler
-      #   uses: dlang-community/setup-dlang@v1.1.1
-      #   with:
-      #     compiler: ${{ matrix.dc }}
+      - name: Install D compiler
+        uses: dlang-community/setup-dlang@v1.1.1
+        with:
+          compiler: ${{ matrix.dc }}
 
-      # - name: Set up Python ${{ matrix.python-version }}
-      #   uses: actions/setup-python@v4
-      #   with:
-      #     python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
 
-      # - name: Install Python dependencies
-      #   run: |
-      #     python -m pip install --upgrade pip
-      #     pip install -r requirements.txt
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      # - name: Run tests
-      #   shell: bash
-      #   run: |
-      #     echo "LIBRARY_PATH: $LIBRARY_PATH"
-      #   env:
-      #   #   LIBPYTHON: python${{ matrix.python-version }}
-      #   #   LIBRARY_PATH: /usr/lib/llvm-10/lib # where Github Ubuntu images have it
-      #   #   LD_RUN_PATH: $PYTHON_LIB_DIR
-      #     LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib
+      - name: Run tests
+        shell: bash
+        run: |
+          echo "LIBRARY_PATH: $LIBRARY_PATH"
+        env:
+          LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib
 
-      # - uses: codecov/codecov-action@v3
+        #   LIBPYTHON: python${{ matrix.python-version }}
+        #   LIBRARY_PATH: /usr/lib/llvm-10/lib # where Github Ubuntu images have it
+        #   LD_RUN_PATH: $PYTHON_LIB_DIR
+
+      - uses: codecov/codecov-action@v3
