@@ -54,8 +54,7 @@ jobs:
 
       - name: Run tests
         shell: bash
-        run: |
-          echo "LIBRARY_PATH: $LIBRARY_PATH"
+        run: make
         env:
           LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib
 
