@@ -57,6 +57,7 @@ jobs:
         run: make
         env:
           LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib
+          LD_LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib
 
         #   LIBPYTHON: python${{ matrix.python-version }}
         #   LIBRARY_PATH: /usr/lib/llvm-10/lib # where Github Ubuntu images have it
