@@ -6,7 +6,7 @@ jobs:
     name: Run tests
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-2022, macos-11]
+        os: [ubuntu-20.04, macos-11]
         dc:
           - dmd-2.100.2
           - ldc-1.30.0
