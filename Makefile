@@ -14,7 +14,7 @@ export PYTHON_LIB = $(shell python -c "from sys import version_info as vi; print
 
 
 source/python/c.d: source/python/c.dpp $(PYTHON_INCLUDE_DIR)/Python.h
-	dub run dpp@0.4.10 --build=release -- --function-macros --preprocess-only --include-path $(PYTHON_INCLUDE_DIR) $<
+	dub run dpp@0.4.11 --build=release -- --function-macros --preprocess-only --include-path $(PYTHON_INCLUDE_DIR) $<
 
 .PHONY: test-raw
 test-raw: source/python/c.d tests/extensions/raw/raw.so
@@ -25,4 +25,4 @@ tests/extensions/raw/raw.so: tests/extensions/raw/libraw.so
 
 .PHONY: tests/extensions/raw/libraw.so
 tests/extensions/raw/libraw.so: source/python/c.d
-	cd tests/extensions/raw && dub build
+	cd tests/extensions/raw && dub build -v
