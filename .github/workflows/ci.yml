@@ -38,6 +38,7 @@ jobs:
           echo "Done wondering"
 
       - name: Install D compiler
+        # must go before setting LD_LIBRARY_PATH for Python since this overrides it
         uses: dlang-community/setup-dlang@v1.1.1
         with:
           compiler: ${{ matrix.dc }}
@@ -52,12 +53,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Environment variables
+        # This is so we can find libclang at runtime
+        run: echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${{ env.LLVM_PATH }}/lib" >> $GITHUB_ENV
+
       - name: Run tests
         shell: bash
-        run: make
+        run: |
+          echo "LD: $LD_LIBRARY_PATH"
+          make
         env:
-          LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib
-          LD_LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib
+          LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib  # find it while linking
+          #LD_LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib # find it while running
+          #LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:${{ env.LLVM_PATH }}/lib"
 
         #   LIBPYTHON: python${{ matrix.python-version }}
         #   LIBRARY_PATH: /usr/lib/llvm-10/lib # where Github Ubuntu images have it
