@@ -8,9 +8,9 @@ jobs:
       matrix:
         # FIXME: Windows, MacOS
         os: [ubuntu-20.04]
+        # FIXME: ldc
         dc:
           - dmd-2.100.2
-          - ldc-1.30.0
 
         python-version:
           - 3.9
