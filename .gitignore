@@ -2,5 +2,6 @@
 bin
 *.a
 source/python/c.d
+source/python/c.d.tmp
 *.so
 __pycache__
