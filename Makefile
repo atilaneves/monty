@@ -25,4 +25,4 @@ tests/extensions/raw/raw.so: tests/extensions/raw/libraw.so
 
 .PHONY: tests/extensions/raw/libraw.so
 tests/extensions/raw/libraw.so: source/python/c.d
-	cd tests/extensions/raw && dub build -v
+	cd tests/extensions/raw && dub build -q
