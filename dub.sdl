@@ -1,4 +1,4 @@
-name "pythonapi"
+name "cpython"
 authors "Atila Neves"
 license "boost"
 

@@ -21,7 +21,7 @@ export PyObject* PyInit_raw() {
 
     static PyModuleDef moduleDef;
     moduleDef = PyModuleDef(
-        PyModuleDef_Base(),
+        pyModuleDefHeadInit(),
         "raw",
         null, // doc
         -1, // global state

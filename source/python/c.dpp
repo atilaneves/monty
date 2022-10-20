@@ -3,7 +3,19 @@ module python.c;
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
-// demacroify
-auto pyModuleCreate(A...)(A args) {
-    return PyModule_Create(args);
+// Hand-translate PyObject_HEAD_INIT since the C code in the macro isn't
+// valid D code to initialise a struct with.
+auto pyObjectHeadInit(T)(T type) {
+    return PyObject(1, type);
+}
+
+// Hand-translate PyModuleDef_HEAD_INIT since the C code in the macro isn't
+// valid D code to initialise a struct with.
+auto pyModuleDefHeadInit() {
+    return PyModuleDef_Base(
+        pyObjectHeadInit(null),
+        null, /* m_init */
+        0,    /* m_index */
+        null, /* m_copy */
+    );
 }
