@@ -13,7 +13,7 @@ export PyObject* PyInit_raw() {
     catch(Exception _)
         return null;
 
-    static PyMethodDef[] methods;
+    static PyMethodDef[1 + 1] methods;
     methods = [
         PyMethodDef("the_answer", &theAnswer, METH_VARARGS, "The answer to the ultimate question"),
         PyMethodDef(null, null, 0, null), // sentinel
@@ -27,7 +27,6 @@ export PyObject* PyInit_raw() {
         -1, // global state
         &methods[0],
     );
-
 
     return PyModule_Create(&moduleDef);
 }

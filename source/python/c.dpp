@@ -1,13 +1,24 @@
 module python.c;
 
+@trusted @nogc nothrow:
+
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
+#include <structmember.h> // PyMemberDef
+
+// Demacroify
+// Used to declare custom Python objects, needs to be mixed in at the
+// top of the struct.
+mixin template PyObjectHead() {
+    PyObject ob_base;
+}
 
 // Hand-translate PyObject_HEAD_INIT since the C code in the macro isn't
 // valid D code to initialise a struct with.
 auto pyObjectHeadInit(T)(T type) {
     return PyObject(1, type);
 }
+
 
 // Hand-translate PyModuleDef_HEAD_INIT since the C code in the macro isn't
 // valid D code to initialise a struct with.
