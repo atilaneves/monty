@@ -20,11 +20,8 @@ source/python/c.d: source/python/c.dpp $(PYTHON_INCLUDE_DIR)/Python.h
 	dub run dpp@0.4.11 -q --build=release -- --function-macros --preprocess-only --include-path $(PYTHON_INCLUDE_DIR) $<
 
 .PHONY: test-raw
-test-raw: tests/extensions/raw/raw.so
+test-raw: tests/extensions/raw/libraw.so
 	PYTHONPATH=$(shell pwd)/tests/extensions/raw pytest -s -vv tests
-
-tests/extensions/raw/raw.so: tests/extensions/raw/libraw.so
-	cp $< $@
 
 .PHONY: tests/extensions/raw/libraw.so
 tests/extensions/raw/libraw.so:
