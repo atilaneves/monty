@@ -9,8 +9,9 @@
 all: test-raw
 
 export PYTHON_INCLUDE_DIR = $(shell python -c "from sysconfig import get_paths as gp; print(gp()['include'])")
-export PYTHON_LIB_DIR = $(shell python -c "from sysconfig import get_config_var; print(get_config_var('LIBDIR'))")
-export PYTHON_LIB = $(shell python -c "from sys import version_info as vi; print(f'python{vi.major}.{vi.minor}')")
+# Only needed when linking to python to use as a library (e.g. unittests)
+# export PYTHON_LIB_DIR = $(shell python -c "from sysconfig import get_config_var; print(get_config_var('LIBDIR'))")
+# export PYTHON_LIB = $(shell python -c "from sys import version_info as vi; print(f'python{vi.major}.{vi.minor}')")
 
 
 # this is here to be used by dub in preGenerateCommands and shouldn't
