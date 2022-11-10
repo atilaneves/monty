@@ -5,12 +5,8 @@ license "boost"
 targetType "library"
 targetPath "bin"
 
-preGenerateCommands "make -C $PACKAGE_DIR source/python/c.d"
-# unfortunately, even though the below line works, it always gets executed
-#preGenerateCommands "dub run dpp@0.4.11 --build=release --compiler=ldc2 -- --function-macros --preprocess-only --include-path $$(python $PACKAGE_DIR/include.py) $PACKAGE_DIR/source/python/c.dpp"
+preGenerateCommands "$PACKAGE_DIR/translate.sh" platform="posix"
 
-libs "$PYTHON_LIB"
-lflags "-L$PYTHON_LIB_DIR"
 
 configuration "library" {
 
@@ -23,6 +19,10 @@ configuration "unittest" {
     mainSourceFile "tests/main.d"
     sourcePaths "tests"
     importPaths "tests"
+
+    // link to python as a library
+    libs "$PYTHON_LIB"
+    lflags "-L$PYTHON_LIB_DIR"
 
     dflags "-preview=dip1000" "-preview=dip1008"
 
