@@ -48,7 +48,7 @@ jobs:
 
       - name: Run tests
         shell: bash
-        run: ci.sh
+        run: ./ci.sh
         env:
           LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib  # find libclang while linking
 
