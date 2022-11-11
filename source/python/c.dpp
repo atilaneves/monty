@@ -10,7 +10,7 @@ module python.c;
 // Used to declare custom Python objects, needs to be mixed in at the
 // top of the struct.
 mixin template PyObjectHead() {
-    PyObject ob_base;
+    PyObject_HEAD;
 }
 
 // Hand-translate PyObject_HEAD_INIT since the C code in the macro isn't
