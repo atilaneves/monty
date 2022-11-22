@@ -1,5 +1,12 @@
 module python.d;
 
+import python.c: PyDateTime_CAPI;
+// This is required to avoid linker errors. Before it was in the string mixin,
+// but there's no need for it there, instead we declare it here in the library
+// instead.
+export __gshared extern(C) PyDateTime_CAPI* PyDateTimeAPI;
+
+
 /**
    A utility function that does the same thing as PyModule_Create, but easier,
    by creating the appropriate PyMethodDef array for the passed-in C functions.
@@ -13,13 +20,15 @@ module python.d;
 imported!"python.c".PyObject* createPythonModule(string name, functions...)() nothrow {
     import python.c: PyModule_Create, PyModuleDef, pyModuleDefHeadInit, PyMethodDef,
         PyCFunction, PyCFunctionWithKeywords, PyObject,
-        METH_VARARGS, METH_KEYWORDS;
+        METH_VARARGS, METH_KEYWORDS, pyDateTimeImport;
     import core.runtime: rt_init;
 
     try
         rt_init;
     catch(Exception _)
         return null;
+
+    pyDateTimeImport;
 
     static PyMethodDef[functions.length + 1] methodDefs;
 
