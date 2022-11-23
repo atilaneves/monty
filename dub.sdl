@@ -1,4 +1,5 @@
 name "cpython"
+description "Makes the Python C API available to D"
 authors "Atila Neves"
 license "boost"
 
