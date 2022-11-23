@@ -1,4 +1,4 @@
-name "cpython"
+name "pythonapi"
 description "Makes the Python C API available to D"
 authors "Atila Neves"
 license "boost"
@@ -7,7 +7,6 @@ targetType "library"
 targetPath "bin"
 
 preGenerateCommands "$PACKAGE_DIR/translate.sh" platform="posix"
-
 
 configuration "library" {
 
@@ -25,7 +24,8 @@ configuration "unittest" {
     libs "$PYTHON_LIB"
     lflags "-L$PYTHON_LIB_DIR"
 
-    dflags "-preview=dip1000" "-preview=dip1008"
+    dflags "-preview=dip1000" "-preview=dip1008" "-allinst"
+    versions "unitUnthreaded"  # GIL
 
     dependency "unit-threaded" version="*"
 }
