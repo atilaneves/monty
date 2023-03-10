@@ -10,6 +10,7 @@ jobs:
         os: [ubuntu-20.04]
         # FIXME: ldc
         dc:
+          - dmd-2.102.1
           - dmd-2.100.2
 
         python-version:
