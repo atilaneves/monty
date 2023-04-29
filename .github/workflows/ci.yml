@@ -17,9 +17,10 @@ jobs:
           - dmd-2.102.2
           - dmd-2.101.2
           - dmd-2.100.2
-
         python-version:
           - 3.9
+          - 3.10
+          - 3.11
 
     runs-on: ${{ matrix.os }}
     steps:
