@@ -17,7 +17,7 @@ if [[ "${OS:-}" == "Windows_NT" ]]; then
     # or python code manually injecting dll paths would need to be used.
     cp $(where phobos2-ldc-shared.dll) $(where druntime-ldc-shared.dll) tests
 
-    py -m pytest -s -vv tests
+    python -m pytest -s -vv tests
 else
     dub build
     cd -
