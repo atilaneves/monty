@@ -6,11 +6,15 @@ license "boost"
 targetType "library"
 targetPath "bin"
 
+dependency ":_helper" version="*"
+
+subPackage "_helper"
+
 preGenerateCommands "$PACKAGE_DIR/translate.sh" platform="posix"
 preGenerateCommands "$PACKAGE_DIR/translate.bat" platform="windows"
 
 configuration "library" {
-
+    libs "python3"
 }
 
 configuration "unittest" {
