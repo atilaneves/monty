@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd tests/extensions/raw
-if [[ "$OS" == "Windows_NT" ]]; then
+if [[ "${OS:-}" == "Windows_NT" ]]; then
     # only LDC supported on windows
     dub build --compiler=ldc2
     cd -
