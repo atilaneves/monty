@@ -5,6 +5,9 @@ set -euo pipefail
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd tests/extensions/raw
 if [[ "${OS:-}" == "Windows_NT" ]]; then
+    # XXX: hack! on windows one needs to build twice - linker errors occur on the very first monty build
+    dub build --compiler=ldc2 || true
+
     # only LDC supported on windows
     dub build --compiler=ldc2
     cd -
