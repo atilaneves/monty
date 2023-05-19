@@ -23,7 +23,7 @@ jobs:
         llvm-version:
           - "10.0"
         include:
-          - { os: windows-latest, dc: ldc-latest, python-version: 3.9, llvm-version: "16.0" }
+          - { os: windows-2022, dc: ldc-1.32.2, python-version: 3.9, llvm-version: "16.0" }
 
     runs-on: ${{ matrix.os }}
     steps:
