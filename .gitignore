@@ -4,4 +4,11 @@ bin
 source/python/c.d
 source/python/c.d.tmp
 *.so
+*.dll
+*.exp
+*.pdb
+*.pyd
+*.lib
 __pycache__
+# _helper gets overwritten, it's only in there so dub won't complain we are depending on something that doesn't exist
+_helper

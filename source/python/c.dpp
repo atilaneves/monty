@@ -42,7 +42,9 @@ auto pyTrue() {
     // FIXME:
     // This doesn't work as a manifest constant because there's a cast that the CTFE
     // engine doesn't like
-    return Py_True;
+    //return Py_True;
+    // TODO: use Py_True instead, but it's apparently broken on windows
+    return PyBool_FromLong(1);
 }
 
 // Demacroify
@@ -50,7 +52,9 @@ auto pyFalse() {
     // FIXME:
     // This doesn't work as a manifest constant because there's a cast that the CTFE
     // engine doesn't like
-    return Py_False;
+    //return Py_False;
+    // TODO: use Py_False instead, but it's apparently broken on windows
+    return PyBool_FromLong(0);
 }
 
 auto pyObjectNew(T)(PyTypeObject* typeobj) {
