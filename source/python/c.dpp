@@ -1,5 +1,8 @@
 module python.c;
 
+public import python.statics;
+
+
 @trusted @nogc nothrow:
 
 #define PY_SSIZE_T_CLEAN
@@ -70,5 +73,3 @@ static int PyType_HasFeature(PyTypeObject *type, ulong feature) @safe @nogc pure
     flags = type.tp_flags;
     return (flags & feature) != 0;
 }
-
-public import python.statics;

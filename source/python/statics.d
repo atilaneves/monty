@@ -6,7 +6,7 @@ import python.c;
 extern(C):
 
 alias Py_IS_TYPE_ = Py_IS_TYPE; // FIXME
-alias _Py_IS_TYPE_ = Py_IS_TYPE; // FIXME
+alias _Py_IS_TYPE = Py_IS_TYPE; // FIXME
 
 // static inline function in the header
 int Py_IS_TYPE(const PyObject *ob, const PyTypeObject *type) @safe @nogc pure nothrow {
