@@ -14,7 +14,7 @@ preGenerateCommands "$PACKAGE_DIR/translate.sh" platform="posix"
 preGenerateCommands "$PACKAGE_DIR/translate.bat" platform="windows"
 
 configuration "library" {
-    libs "python3"
+    libs "python3" platform="windows"
 }
 
 configuration "unittest" {
