@@ -8,21 +8,19 @@ jobs:
       matrix:
         os:
           # FIXME: MacOS
-          # - ubuntu-22.04 - this fails with a weird error:
-          # clang: error while loading shared libraries: libtinfo.so.5: cannot open shared object file: No such file or directory
-          - ubuntu-20.04
-        # FIXME: ldc
+          - ubuntu-22.04
         dc:
           - dmd-2.104.0
-          - dmd-2.103.0
-          - dmd-2.102.2
-          - dmd-2.101.2
-          - dmd-2.100.2
+          - ldc-1.32.2
 
         python-version:
+          - 3.11
           - 3.9
+
         llvm-version:
-          - "10.0"
+          - "15.0"
+          - "14.0"
+
         include:
           - { os: windows-2022, dc: ldc-1.32.2, python-version: 3.9, llvm-version: "16.0" }
 
