@@ -26,4 +26,5 @@ static if(is(typeof(Py_IS_TYPE(null, null)))) {
 
     // translation fails here still
     alias PyObject_TypeCheck = PyObject_TypeCheck_;
+    alias _PyObject_TypeCheck = PyObject_TypeCheck; // FIXME
 }
