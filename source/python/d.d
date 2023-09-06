@@ -35,8 +35,10 @@ imported!"python.c".PyObject* createPythonModule(string name, functions...)() no
     enum isPythonCFunction(alias F) = is(typeof(() nothrow { PyObject* obj; obj = F(obj, obj); }));
     enum isPythonCFunctionKwargs(alias F) = is(typeof(() nothrow { PyObject* obj; obj = F(obj, obj, obj); }));
 
-    static foreach(i, F; functions) {
-        static if(!isPythonCFunction!F && !isPythonCFunctionKwargs!F) {
+    static foreach(i, F; functions) {{
+        enum isCFun = isPythonCFunction!F;
+        enum isKwargs = isPythonCFunctionKwargs!F;
+        static if(!isCFun && !isKwargs) {
             import std.conv: text;
             import std.traits: fullyQualifiedName;
 
@@ -55,10 +57,12 @@ imported!"python.c".PyObject* createPythonModule(string name, functions...)() no
         methodDefs[i] = PyMethodDef(
             __traits(identifier, F),
             &F,
-            METH_VARARGS | METH_KEYWORDS,
+            isKwargs
+                ? (METH_VARARGS | METH_KEYWORDS)
+                : METH_VARARGS,
             null, // doc
         );
-    }
+    }}
 
     static PyModuleDef moduleDef;
     moduleDef = PyModuleDef(
