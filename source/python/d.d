@@ -32,8 +32,8 @@ imported!"python.c".PyObject* createPythonModule(string name, functions...)() no
 
     static PyMethodDef[functions.length + 1] methodDefs;
 
-    enum isPythonCFunction(alias F) = is(typeof(() nothrow { PyObject* obj; obj = F(obj, obj); }));
-    enum isPythonCFunctionKwargs(alias F) = is(typeof(() nothrow { PyObject* obj; obj = F(obj, obj, obj); }));
+    enum isPythonCFunction(alias F) = is(typeof(() nothrow { PyObject* obj; const PyObject* obj2 = F(obj, obj); }));
+    enum isPythonCFunctionKwargs(alias F) = is(typeof(() nothrow { PyObject* obj; const PyObject* obj2 = F(obj, obj, obj); }));
 
     static foreach(i, F; functions) {
         static if(!isPythonCFunction!F && !isPythonCFunctionKwargs!F) {
