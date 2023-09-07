@@ -27,7 +27,18 @@ else
     exit 1
 fi
 
+function warn_old_clang {
+    CLANG_VER="$(clang --version | head -n1)"
+    if [[ "$CLANG_VER" =~ [Cc]lang\ [Vv]ersion\ (5|6|7|8|9|10|11) ]]; then
+        echo "Your clang version appears to be quite old, errors in translation might be fixed by upgrading your clang version to at least clang 12 or newer."
+        echo "If you have newer clang versions installed in parallel, try uninstalling the older ones or symlinking the newer one to 'clang'."
+        echo "$CLANG_VER"
+    fi
+}
+
 if [[ ! -f $o || $i -nt $o ]]; then
+    trap warn_old_clang ERR
+
     PYTHON_INCLUDE_PATH=$(python3 "$PACKAGE_DIR"/include.py)
     echo "Translating Python headers in $PYTHON_INCLUDE_PATH"
     CC="$clinker" dub run dpp@0.5.5 --build=release -- --ignore-cursor=stat64 --ignore-cursor=PyType_HasFeature --ignore-cursor=_Py_IS_TYPE  --ignore-cursor=_PyObject_TypeCheck --function-macros --preprocess-only --include-path "$PYTHON_INCLUDE_PATH" "$i"
