@@ -56,7 +56,7 @@ imported!"python.c".PyObject* createPythonModule(string name, functions...)() no
 
         methodDefs[i] = PyMethodDef(
             __traits(identifier, F),
-            &F,
+            (() @trusted => cast(PyCFunction) &F)(),
             isKwargs
                 ? (METH_VARARGS | METH_KEYWORDS)
                 : METH_VARARGS,
