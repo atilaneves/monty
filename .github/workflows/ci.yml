@@ -10,10 +10,13 @@ jobs:
           # FIXME: MacOS
           - ubuntu-22.04
         dc:
+          - dmd-2.108.1
           - dmd-2.104.0
+          - ldc-1.38.0
           - ldc-1.32.2
 
         python-version:
+          - 3.12
           - 3.11
           - 3.9
 
@@ -27,7 +30,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install clang
         uses: KyleMayes/install-llvm-action@v1.8.0
@@ -36,7 +39,7 @@ jobs:
 
       - name: Install D compiler
         # must go before setting LD_LIBRARY_PATH below
-        uses: dlang-community/setup-dlang@v1.3.0
+        uses: dlang-community/setup-dlang@v1.4.0
         with:
           compiler: ${{ matrix.dc }}
 
@@ -61,4 +64,4 @@ jobs:
         env:
           LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib  # find libclang while linking
 
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
