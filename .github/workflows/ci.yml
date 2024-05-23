@@ -10,14 +10,18 @@ jobs:
           # FIXME: MacOS
           - ubuntu-22.04
         dc:
+          - dmd-2.108.1
           - dmd-2.104.0
+          - ldc-1.38.0
           - ldc-1.32.2
 
         python-version:
+          - 3.12
           - 3.11
           - 3.9
 
         llvm-version:
+          - "17.0"
           - "15.0"
           - "14.0"
 

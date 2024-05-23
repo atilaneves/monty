@@ -26,7 +26,7 @@ mixin template PyObjectHead() {
 // Hand-translate PyObject_HEAD_INIT since the C code in the macro isn't
 // valid D code to initialise a struct with.
 auto pyObjectHeadInit(T)(T type) {
-    return PyObject(1, type);
+    return PyObject(typeof(PyObject.tupleof[0])(1), type);
 }
 
 
