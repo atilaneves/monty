@@ -57,7 +57,9 @@ jobs:
       - name: Environment variables
         # This is so we can find libclang at runtime
         # We append to the current value in order to keep what's set by the D installation
-        run: echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${{ env.LLVM_PATH }}/lib" >> $GITHUB_ENV
+        run: |
+          echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${{ env.LLVM_PATH }}/lib" >> $GITHUB_ENV
+          echo "LIBRARY_PATH=$LIBRARY_PATH:${{ env.LLVM_PATH }}/lib" >> $GITHUB_ENV
 
       - name: Run tests
         shell: bash
