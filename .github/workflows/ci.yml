@@ -21,28 +21,28 @@ jobs:
           - 3.9
 
         llvm-version:
-          - "17.0"
-          - "15.0"
-          - "14.0"
+          - 17.0.6
+          - 14.0.0
+          - 12.0.0
 
         include:
-          - { os: windows-2022, dc: ldc-1.32.2, python-version: 3.9, llvm-version: "16.0" }
+          - { os: windows-2022, dc: ldc-1.32.2, python-version: 3.9, llvm-version: "16.0.0" }
 
     runs-on: ${{ matrix.os }}
     steps:
 
-      - uses: actions/checkout@v3
-
-      - name: Install clang
-        uses: KyleMayes/install-llvm-action@v1.8.0
-        with:
-          version: ${{ matrix.llvm-version }}
+      - uses: actions/checkout@v4
 
       - name: Install D compiler
         # must go before setting LD_LIBRARY_PATH below
-        uses: dlang-community/setup-dlang@v1.3.0
+        uses: dlang-community/setup-dlang@v1.4.0
         with:
           compiler: ${{ matrix.dc }}
+
+      - name: Setup C++
+        uses: aminya/setup-cpp@v1
+        with:
+          llvm: ${{ matrix.clang }}
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -65,4 +65,4 @@ jobs:
         env:
           LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib  # find libclang while linking
 
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
