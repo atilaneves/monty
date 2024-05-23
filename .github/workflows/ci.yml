@@ -21,28 +21,27 @@ jobs:
           - 3.9
 
         llvm-version:
-          - 17.0.6
-          - 14.0.0
-          - 12.0.0
+          - "15.0"
+          - "14.0"
 
         include:
-          - { os: windows-2022, dc: ldc-1.32.2, python-version: 3.9, llvm-version: "16.0.0" }
+          - { os: windows-2022, dc: ldc-1.32.2, python-version: 3.9, llvm-version: "16.0" }
 
     runs-on: ${{ matrix.os }}
     steps:
 
       - uses: actions/checkout@v4
 
+      - name: Install clang
+        uses: KyleMayes/install-llvm-action@v1.8.0
+        with:
+          version: ${{ matrix.llvm-version }}
+
       - name: Install D compiler
         # must go before setting LD_LIBRARY_PATH below
         uses: dlang-community/setup-dlang@v1.4.0
         with:
           compiler: ${{ matrix.dc }}
-
-      - name: Setup C++
-        uses: aminya/setup-cpp@v1
-        with:
-          llvm: ${{ matrix.clang }}
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -57,9 +56,7 @@ jobs:
       - name: Environment variables
         # This is so we can find libclang at runtime
         # We append to the current value in order to keep what's set by the D installation
-        run: |
-          echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${{ env.LLVM_PATH }}/lib" >> $GITHUB_ENV
-          echo "LIBRARY_PATH=$LIBRARY_PATH:${{ env.LLVM_PATH }}/lib" >> $GITHUB_ENV
+        run: echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${{ env.LLVM_PATH }}/lib" >> $GITHUB_ENV
 
       - name: Run tests
         shell: bash
