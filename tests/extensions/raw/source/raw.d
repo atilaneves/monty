@@ -14,6 +14,7 @@ export PyObject* PyInit_raw() {
     catch(Exception _)
         return null;
 
+    pyDateTimeImport;
 
     enum numMethods = 4;
     static PyMethodDef[numMethods + 1] methods;
