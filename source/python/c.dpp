@@ -42,7 +42,8 @@ auto pyModuleDefHeadInit() {
 }
 
 auto pyObjectNew(T)(PyTypeObject* typeobj) {
-    return cast(T*) _PyObject_New(typeobj);
+    //return cast(T*) _PyObject_New(typeobj);
+    return PyObject_New(T, typeobj);
 }
 
 // Demacroify
