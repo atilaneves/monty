@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install clang
-        uses: KyleMayes/install-llvm-action@v1.8.0
+        uses: KyleMayes/install-llvm-action@v2
         with:
           version: ${{ matrix.llvm-version }}
 
@@ -44,7 +44,7 @@ jobs:
           compiler: ${{ matrix.dc }}
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
