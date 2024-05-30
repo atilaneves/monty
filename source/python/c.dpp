@@ -41,21 +41,6 @@ auto pyModuleDefHeadInit() {
     );
 }
 
-auto pyTrue() {
-    // FIXME:
-    // This doesn't work as a manifest constant because there's a cast that the CTFE
-    // engine doesn't like
-    return Py_True;
-}
-
-// Demacroify
-auto pyFalse() {
-    // FIXME:
-    // This doesn't work as a manifest constant because there's a cast that the CTFE
-    // engine doesn't like
-    return Py_False;
-}
-
 auto pyObjectNew(T)(PyTypeObject* typeobj) {
     return cast(T*) _PyObject_New(typeobj);
 }
