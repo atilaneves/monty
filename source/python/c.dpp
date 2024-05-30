@@ -10,7 +10,11 @@ public import python.statics;
 #include <structmember.h> // PyMemberDef
 #include <datetime.h>
 
-// FIXME: The two macros below aren't showing up for some reason
+// FIXME: The two macros below aren't showing up. Default isn't
+// working because it depends on the definition of
+// `Py_TPFLAGS_HAVE_STACKLESS_EXTENSION`, which is defined below it in
+// the resulting c.d file. The fact that there are static ifs
+// everywhere probably makes the order of definitions matter.
 enum TypeFlags {
     BaseType = Py_TPFLAGS_BASETYPE,
     Default = Py_TPFLAGS_DEFAULT,
@@ -48,7 +52,14 @@ auto pyObjectNew(T)(PyTypeObject* typeobj) {
 
 // Demacroify
 // FIXME:
-// This fails due to some weird is(typeof) check for the date time capsule
+// This fails because `PyDateTime_IMPORT` depends on
+// `PyDateTime_CAPSULE_NAME`, which gets defined below it in a static
+// if.
+// If moved manually, it then fails because `PyDateTime_Import` expands
+// to `PyDateTimeAPI = cast(T*) PyCapsure_Import(...);` and the macro translation
+// ends up being:
+// `enum PyDateTime_IMPORT = PyDateTimeAPI = ...;`. This doesn't compile because
+// `PyDateTimeAPI` isn't known at compile time.
 void pyDateTimeImport() @nogc nothrow {
     PyDateTime_IMPORT;
 }
