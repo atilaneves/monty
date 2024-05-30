@@ -10,8 +10,14 @@ def test_always_false():
     from raw import always_false
     assert always_false() is False
 
-def test_struct_func():
-    from raw import struct_func
-    mytype = struct_func()
+def test_struct_func_new():
+    from raw import struct_func_new
+    mytype = struct_func_new()
+    assert mytype.the_int == 42
+    assert mytype.the_double == 33.3
+
+def test_struct_func_old():
+    from raw import struct_func_old
+    mytype = struct_func_old()
     assert mytype.the_int == 42
     assert mytype.the_double == 33.3

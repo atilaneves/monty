@@ -9,12 +9,14 @@ public import python.statics;
 #include <Python.h>
 #include <structmember.h> // PyMemberDef
 #include <datetime.h>
+#include <descrobject.h>
 
 // FIXME: The two macros below aren't showing up. Default isn't
 // working because it depends on the definition of
 // `Py_TPFLAGS_HAVE_STACKLESS_EXTENSION`, which is defined below it in
-// the resulting c.d file. The fact that there are static ifs
-// everywhere probably makes the order of definitions matter.
+// the resulting c.d file. The order of declarations in D doesn't
+// usually matter but it does when they're introduced inside a static
+// if.
 enum TypeFlags {
     BaseType = Py_TPFLAGS_BASETYPE,
     Default = Py_TPFLAGS_DEFAULT,
