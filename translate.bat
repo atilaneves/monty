@@ -27,6 +27,6 @@ echo name "_helper"; targetType "sourceLibrary"; lflags `/LIBPATH:%PYTHON_INCLUD
 
 IF NOT EXIST "%PYTHON_INCLUDE_PATH%\..\libs\python3.lib" echo WARNING: %PYTHON_INCLUDE_PATH%\..\libs\python3.lib does not exist, linking may fail!
 
-dub run dpp@0.5.6 --build=release -- --ignore-cursor=stat64 --ignore-cursor=PyType_HasFeature --ignore-cursor=_Py_IS_TYPE  --ignore-cursor=_PyObject_TypeCheck --ignore-cursor=COMPILER --ignore-cursor=_PyCode_DEF --ignore-cursor=Py_IS_TYPE --function-macros --preprocess-only --include-path "%PYTHON_INCLUDE_PATH%" "%IFILE%"
+dub run dpp@0.6.0 --build=release -- --ignore-cursor=stat64 --ignore-cursor=PyType_HasFeature --ignore-cursor=_Py_IS_TYPE  --ignore-cursor=_PyObject_TypeCheck --ignore-cursor=COMPILER --ignore-cursor=_PyCode_DEF --ignore-cursor=Py_IS_TYPE --function-macros --preprocess-only --scoped-enums --include-path "%PYTHON_INCLUDE_PATH%" "%IFILE%"
 
 :END

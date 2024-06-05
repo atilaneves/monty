@@ -7,20 +7,8 @@ public import python.statics;
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
-#include <structmember.h> // PyMemberDef
+#include <structmember.h>
 #include <datetime.h>
-#include <descrobject.h>
-
-// FIXME: The two macros below aren't showing up. Default isn't
-// working because it depends on the definition of
-// `Py_TPFLAGS_HAVE_STACKLESS_EXTENSION`, which is defined below it in
-// the resulting c.d file. The order of declarations in D doesn't
-// usually matter but it does when they're introduced inside a static
-// if.
-enum TypeFlags {
-    BaseType = Py_TPFLAGS_BASETYPE,
-    Default = Py_TPFLAGS_DEFAULT,
-}
 
 // Demacroify
 // Used to declare custom Python objects, needs to be mixed in at the
@@ -48,20 +36,12 @@ auto pyModuleDefHeadInit() {
 }
 
 auto pyObjectNew(T)(PyTypeObject* typeobj) {
-    //return cast(T*) _PyObject_New(typeobj);
     return PyObject_New(T, typeobj);
 }
 
 // Demacroify
-// FIXME:
-// This fails because `PyDateTime_IMPORT` depends on
-// `PyDateTime_CAPSULE_NAME`, which gets defined below it in a static
-// if.
-// If moved manually, it then fails because `PyDateTime_Import` expands
-// to `PyDateTimeAPI = cast(T*) PyCapsure_Import(...);` and the macro translation
-// ends up being:
-// `enum PyDateTime_IMPORT = PyDateTimeAPI = ...;`. This doesn't compile because
-// `PyDateTimeAPI` isn't known at compile time.
+// If translated manually this would be a mixin template.
+// The macro expands to an assignment to a global variable.
 void pyDateTimeImport() @nogc nothrow {
     PyDateTime_IMPORT;
 }

@@ -16,14 +16,13 @@ export PyObject* PyInit_raw() {
 
     pyDateTimeImport;
 
-    enum numMethods = 5;
+    enum numMethods = 4;
     static PyMethodDef[numMethods + 1] methods;
     methods = [
         PyMethodDef("the_answer",      &theAnswer,   METH_VARARGS, "The answer to the ultimate question"),
         PyMethodDef("always_true",     &alwaysTrue,  METH_VARARGS, "Truthiness"),
         PyMethodDef("always_false",    &alwaysFalse, METH_VARARGS, "Falsiness"),
-        PyMethodDef("struct_func_new", &struct_func_new, METH_VARARGS, "returns struct"),
-        PyMethodDef("struct_func_old", &struct_func_old, METH_VARARGS, "returns struct"),
+        PyMethodDef("struct_func",     &struct_func, METH_VARARGS, "returns struct"),
         PyMethodDef(null, null, 0, null), // sentinel
     ];
 
