@@ -7,14 +7,8 @@ public import python.statics;
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
-#include <structmember.h> // PyMemberDef
+#include <structmember.h>
 #include <datetime.h>
-
-// FIXME: The two macros below aren't showing up for some reason
-enum TypeFlags {
-    BaseType = Py_TPFLAGS_BASETYPE,
-    Default = Py_TPFLAGS_DEFAULT,
-}
 
 // Demacroify
 // Used to declare custom Python objects, needs to be mixed in at the
@@ -41,28 +35,13 @@ auto pyModuleDefHeadInit() {
     );
 }
 
-auto pyTrue() {
-    // FIXME:
-    // This doesn't work as a manifest constant because there's a cast that the CTFE
-    // engine doesn't like
-    return Py_True;
-}
-
-// Demacroify
-auto pyFalse() {
-    // FIXME:
-    // This doesn't work as a manifest constant because there's a cast that the CTFE
-    // engine doesn't like
-    return Py_False;
-}
-
 auto pyObjectNew(T)(PyTypeObject* typeobj) {
-    return cast(T*) _PyObject_New(typeobj);
+    return PyObject_New(T, typeobj);
 }
 
 // Demacroify
-// FIXME:
-// This fails due to some weird is(typeof) check for the date time capsule
+// If translated manually this would be a mixin template.
+// The macro expands to an assignment to a global variable.
 void pyDateTimeImport() @nogc nothrow {
     PyDateTime_IMPORT;
 }
