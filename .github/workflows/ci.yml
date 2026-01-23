@@ -7,12 +7,12 @@ jobs:
     strategy:
       matrix:
         os:
-          # FIXME: MacOS
-          - ubuntu-22.04
+          - ubuntu-24.04
+          - macos-14
         dc:
-          - dmd-2.108.1
+          - dmd-2.111.0
           - dmd-2.104.0
-          - ldc-1.38.0
+          - ldc-1.41.0
           - ldc-1.32.2
 
         python-version:
@@ -39,7 +39,7 @@ jobs:
 
       - name: Install D compiler
         # must go before setting LD_LIBRARY_PATH below
-        uses: dlang-community/setup-dlang@v1.4.0
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: ${{ matrix.dc }}
 
@@ -64,4 +64,4 @@ jobs:
         env:
           LIBRARY_PATH: ${{ env.LLVM_PATH }}/lib  # find libclang while linking
 
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5.1.2
