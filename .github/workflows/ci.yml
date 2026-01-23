@@ -8,7 +8,6 @@ jobs:
       matrix:
         os:
           - ubuntu-24.04
-          - windows-2022
         dc:
           - dmd-2.111.0
           - ldc-1.41.0
@@ -21,10 +20,6 @@ jobs:
         llvm-version:
           - "16.0"
           - "15.0"
-
-        exclude:
-          - os: windows-2022
-            dc: dmd-2.111.0
 
     runs-on: ${{ matrix.os }}
     steps:
