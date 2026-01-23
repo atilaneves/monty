@@ -5,14 +5,14 @@ extern(C) nothrow:
 
 export PyObject* PyInit_raw() {
 
-    import core.runtime: rt_init;
+    import core.runtime: rt_init, rt_term;
     import scalars;
     import udt;
 
     try
         rt_init;
     catch(Exception _)
-        return null;
+        assert(0, "DRuntime initialization should never fail.");
 
     pyDateTimeImport;
 
@@ -26,6 +26,13 @@ export PyObject* PyInit_raw() {
         PyMethodDef(null, null, 0, null), // sentinel
     ];
 
+    static extern(C) void terminateDRuntime(void*) nothrow {
+        try
+            rt_term;
+        catch(Exception _)
+            assert(0, "DRuntime termination should never fail.");
+    }
+
     static PyModuleDef moduleDef;
     moduleDef = PyModuleDef(
         pyModuleDefHeadInit(),
@@ -34,6 +41,7 @@ export PyObject* PyInit_raw() {
         -1, // global state
         &methods[0],
     );
+    moduleDef.m_free = &terminateDRuntime;
 
     return PyModule_Create(&moduleDef);
 }

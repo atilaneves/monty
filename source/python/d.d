@@ -21,12 +21,12 @@ imported!"python.c".PyObject* createPythonModule(string name, functions...)() no
     import python.c: PyModule_Create, PyModuleDef, pyModuleDefHeadInit, PyMethodDef,
         PyCFunction, PyCFunctionWithKeywords, PyObject,
         METH_VARARGS, METH_KEYWORDS, pyDateTimeImport;
-    import core.runtime: rt_init;
+    import core.runtime: rt_init, rt_term;
 
     try
         rt_init;
     catch(Exception _)
-        return null;
+        assert(0, "DRuntime initialization should never fail.");
 
     pyDateTimeImport;
 
@@ -64,6 +64,13 @@ imported!"python.c".PyObject* createPythonModule(string name, functions...)() no
         );
     }}
 
+    static extern(C) void terminateDRuntime(void*) nothrow {
+        try
+            rt_term;
+        catch(Exception _)
+            assert(0, "DRuntime termination should never fail.");
+    }
+
     static PyModuleDef moduleDef;
     moduleDef = PyModuleDef(
         pyModuleDefHeadInit(),
@@ -72,6 +79,7 @@ imported!"python.c".PyObject* createPythonModule(string name, functions...)() no
         -1, // size,
         &methodDefs[0],
     );
+    moduleDef.m_free = &terminateDRuntime;
 
     return PyModule_Create(&moduleDef);
 }
